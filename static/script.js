@@ -7,15 +7,6 @@ function selectButton(button, className) {
     button.classList.add('selected');
 }
 
-function updateMargin(input) {
-    // 현재 선택된 버튼에 여백을 적용
-    const selectedButton = document.querySelector('.selected');
-    if (selectedButton) {
-        const marginValue = `${input.value}px`;
-        selectedButton.style.marginBottom = marginValue;
-    }
-}
-
 let uploadedFiles = []; // 이미 업로드된 파일들을 저장할 배열
 
 function fileChangeHandler(files) {

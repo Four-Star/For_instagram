@@ -40,6 +40,7 @@ def upload():
                 # 파일을 Pillow 이미지로 열기
                 image = Image.open(file.stream)
 
+                print(margin)
                 # 이미지 비율 조정
                 if ratio == '1:1':
                     image = Image_Convert.one2one(image, margin, mode)
