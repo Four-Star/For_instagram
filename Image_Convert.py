@@ -17,6 +17,7 @@ def one2one(image, margin, mode):
 
 def four2five(image, margin, mode):
     # 원본 이미지의 가로, 세로 크기 가져오기
+    #그렇지
     width, height = image.size
     target_ratio = 4 / 5
 
