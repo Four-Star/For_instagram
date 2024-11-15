@@ -1,66 +1,63 @@
 from PIL import Image, ImageOps
 
-
+# 1:1 비율 적용 함수
 def one2one(image, margin, mode):
     width, height = image.size
     new_size = max(width, height)
 
+    # 이미지에 1:1 비율과 여백을 적용
     if mode == 'light':
         square_image = ImageOps.pad(image, (new_size, new_size), color="white", centering=(0.5, 0.5))
-        square_image = ImageOps.pad(square_image, (new_size+margin*2, new_size+margin*2), color="white", centering=(0.5, 0.5))
+        square_image = ImageOps.expand(square_image, border=margin, fill="white")
     else:
         square_image = ImageOps.pad(image, (new_size, new_size), color="black", centering=(0.5, 0.5))
-        square_image = ImageOps.pad(square_image, (new_size+margin*2, new_size+margin*2), color="white", centering=(0.5, 0.5))
+        square_image = ImageOps.expand(square_image, border=margin, fill="black")
 
-    square_image.convert('RGB')
+    square_image = square_image.convert('RGB')
     return square_image
 
-
-# 가로가 4, 세로가 5
+# 가로가 4, 세로가 5 비율 적용 함수
 def four2five(image, margin, mode):
-    # 원본 이미지의 가로, 세로 크기 가져오기
     width, height = image.size
     target_ratio = 4 / 5
 
-    # 가로가 더 긴 경우
+    # 비율을 맞추기 위해 여백을 추가
     if width / height > target_ratio:
-        new_width = width
         new_height = int(width / target_ratio)
-        garo_margin = margin*target_ratio
-        sero_margin = margin
-    else:  # 세로가 더 긴 경우
+        new_width = width
+    else:
         new_width = int(height * target_ratio)
         new_height = height
-        garo_margin = margin*target_ratio
-        sero_margin = margin*target_ratio
 
-    # 여백을 추가하여 5:4 비율의 이미지 만들기
+    # 모드에 따라 이미지 여백과 색상 적용
     if mode == 'light':
-        final_image = ImageOps.pad(image, (new_width, new_height), color="white", centering=(0.5, 0.5))
+        resized_image = ImageOps.pad(image, (new_width, new_height), color="white", centering=(0.5, 0.5))
+        final_image = ImageOps.expand(resized_image, border=(margin, margin*int(target_ratio)), fill="white")
     else:
-        final_image = ImageOps.pad(image, (new_width, new_height), color="black", centering=(0.5, 0.5))
+        resized_image = ImageOps.pad(image, (new_width, new_height), color="black", centering=(0.5, 0.5))
+        final_image = ImageOps.expand(resized_image, border=(margin, margin*int(target_ratio)), fill="black")
 
     return final_image
 
-
-# 가로가 5, 세로가 4
+# 가로가 5, 세로가 4 비율 적용 함수
 def five2four(image, margin, mode):
-    # 원본 이미지의 가로, 세로 크기 가져오기
     width, height = image.size
     target_ratio = 5 / 4
 
-    # 가로가 더 긴 경우
+    # 비율을 맞추기 위해 여백을 추가
     if width / height > target_ratio:
-        new_width = width
         new_height = int(width / target_ratio)
-    else:  # 세로가 더 긴 경우
+        new_width = width
+    else:
         new_width = int(height * target_ratio)
         new_height = height
 
-    # 여백을 추가하여 5:4 비율의 이미지 만들기
+    # 모드에 따라 이미지 여백과 색상 적용
     if mode == 'light':
-        final_image = ImageOps.pad(image, (new_width, new_height), color="white", centering=(0.5, 0.5))
+        resized_image = ImageOps.pad(image, (new_width, new_height), color="white", centering=(0.5, 0.5))
+        final_image = ImageOps.expand(resized_image, border=(margin*int(target_ratio), margin), fill="white")
     else:
-        final_image = ImageOps.pad(image, (new_width, new_height), color="black", centering=(0.5, 0.5))
+        resized_image = ImageOps.pad(image, (new_width, new_height), color="black", centering=(0.5, 0.5))
+        final_image = ImageOps.expand(resized_image, border=(margin*int(target_ratio), margin), fill="black")
 
     return final_image
