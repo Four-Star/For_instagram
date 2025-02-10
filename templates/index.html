@@ -10,27 +10,34 @@
 <body>
 <div class="container">
     <div class="main-content">
+        <!-- 좌측 섹션 -->
         <div class="left-section">
             <div class="title-box">
                 <h2>N to N</h2>
             </div>
+
+            <!-- 모드 선택 -->
             <div class="mode-container">
-                <button class="mode-button" onclick="selectButton(this, 'mode-button')">라이트모드 전용</button>
-                <button class="mode-button" onclick="selectButton(this, 'mode-button')">다크모드 전용</button>
+                <button class="mode-button" onclick="selectButton(this, 'mode-button')" data-mode="light">라이트모드 전용</button>
+                <button class="mode-button" onclick="selectButton(this, 'mode-button')" data-mode="dark">다크모드 전용</button>
             </div>
 
+            <!-- 비율 선택 -->
             <div class="ratio-container">
-                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')">1:1</button>
-                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')">5:4</button>
-                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')">4:5</button>
+                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')" data-ratio="1:1">1:1</button>
+                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')" data-ratio="5:4">5:4</button>
+                <button class="ratio-button" onclick="selectButton(this, 'ratio-button')" data-ratio="4:5">4:5</button>
             </div>
-            <!-- 여백 입력란 -->
+
+            <!-- 여백 입력 -->
             <div class="margin-input-container">
                 <label for="margin-input" class="margin-label">여백 :</label>
                 <input type="number" id="margin-input" class="margin-input" value="0" min="0" oninput="updateMargin(this)">
                 <span>px</span>
             </div>
         </div>
+
+        <!-- 우측 섹션 -->
         <div class="right-section">
             <div class="upload-area" id="upload-area" ondrop="dropHandler(event);" ondragover="dragOverHandler(event);">
                 <input type="file" id="file-input" style="display: none;" onchange="fileChangeHandler(this.files)" multiple>
@@ -38,11 +45,13 @@
                 <p>이미지를 업로드하세요.</p>
                 <div id="upload-preview" class="upload-preview"></div>
             </div>
-            <!-- 버튼 컨테이너 추가 -->
+
+            <!-- 버튼 컨테이너 -->
             <div class="button-container">
                 <button class="action-button" onclick="document.getElementById('file-input').click();">파일 열기</button>
                 <button class="action-button" onclick="convertImages()">이미지 변환</button>
             </div>
+
             <a id="download-link" style="display: none;" download="converted_images.zip">변환된 이미지 다운로드</a>
         </div>
     </div>
