@@ -102,11 +102,21 @@ body {
     justify-content: center;
     align-items: center;
     color: #999;
-    font-size: 1.5em;
+    /*font-size: 1.5em;*/
+    font-size: 1.5vw; /* 화면 크기에 비례하여 글씨 크기 조정 */
+    padding: 2vw; /* 화면 크기에 맞춰 패딩 조정 */
     margin-bottom: 20px;
     text-align: center;
     box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
 }
+
+/* 아이콘 크기 조정 */
+.upload-area img {
+    width: 10vw; /* 화면 크기에 따라 아이콘 크기 조정 */
+    max-width: 100px; /* 최대 크기 제한 */
+    height: auto;
+}
+
 /* 내부 점선 스타일 */
 .upload-area::before {
     content: '';
@@ -184,7 +194,7 @@ body {
 .margin-input-container {
     display: flex;
     align-items: center;
-    margin-top: 20px;
+    margin-top: 0px;
     font-size: 1em;
     color: #FF6A00;
 }
@@ -351,5 +361,15 @@ body {
         width: 100%;
         font-size: 0.9rem;
         padding: 12px;
+    }
+
+    .upload-area {
+        font-size: 3vw; /* 작은 화면에서는 글씨 크기 더 키우기 */
+        padding: 3vw;
+    }
+
+    .upload-area img {
+        width: 15vw; /* 작은 화면에서는 아이콘 크기 확대 */
+        max-width: 80px; /* 최대 크기 제한 */
     }
 }
