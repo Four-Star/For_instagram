@@ -269,12 +269,20 @@ body {
     color: #FF6A00;
 }
 
+/* 작은 화면에서는 세로 정렬 */
 @media (max-width: 768px) {
-    .container {
+    .main-content {
         flex-direction: column;
+        gap: 20px; /* 위아래 간격 추가 */
     }
 
     .left-section, .right-section {
         width: 100%;
+    }
+
+    /* 업로드 영역 크기 조절 */
+    .upload-area {
+        max-width: 80%; /* 모바일에서 크기 줄이기 */
+        height: 200px; /* 높이도 줄이기 */
     }
 }
