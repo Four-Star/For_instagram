@@ -279,6 +279,7 @@ body {
 
     .left-section, .right-section {
         width: 90%;
+        align-items: flex-start;
     }
 
     /* 제목 박스 크기 조절 */
