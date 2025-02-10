@@ -273,43 +273,57 @@ body {
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
-        gap: 15px; /* 간격 조정 */
         align-items: center;
+        gap: 15px; /* 위아래 간격 통일 */
     }
 
     .left-section, .right-section {
-        width: 90%; /* 양쪽 여백 확보 */
+        width: 90%;
     }
 
     /* 제목 박스 크기 조절 */
     .title-box {
-        height: 12vh; /* 뷰포트 높이의 12% */
-        max-height: 180px; /* 최대 높이 제한 */
-        min-height: 100px; /* 너무 작아지지 않도록 설정 */
-        padding: 15px; /* 패딩 줄이기 */
-        font-size: 1.5em; /* 폰트 크기 조정 */
-        margin-bottom: 5px; /* 간격 줄이기 */
+        height: 10vh; /* 뷰포트 높이 기준 */
+        max-height: 160px;
+        min-height: 90px;
+        padding: 15px;
+        font-size: 1.4em;
+        margin-bottom: 15px; /* 아래 간격 통일 */
+    }
+
+    /* 버튼 및 입력 필드 간격 통일 */
+    .mode-container,
+    .ratio-container,
+    .margin-input-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 15px; /* 간격 통일 */
+        width: 100%;
     }
 
     /* 업로드 영역 크기 조절 */
     .upload-area {
-        width: 90vw; /* 화면 너비의 90% */
-        max-width: 400px; /* 최대 크기 제한 */
-        height: 200px; /* 고정된 높이 */
+        width: 85vw; /* 화면 너비의 85% */
+        max-width: 400px;
+        height: 25vh; /* 뷰포트 높이의 25% */
         max-height: 220px;
+        margin-top: 10px;
     }
 
-    /* 버튼 정렬 개선 */
+    /* 버튼 컨테이너 정렬 */
     .button-container {
+        display: flex;
         flex-direction: column;
+        align-items: center;
+        gap: 10px; /* 버튼 간격 조정 */
         width: 100%;
-        gap: 10px;
     }
 
     /* 버튼 크기 조정 */
     .action-button {
         width: 90%;
         font-size: 0.9rem;
-        padding: 10px;
+        padding: 12px;
     }
 }
