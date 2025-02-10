@@ -269,20 +269,47 @@ body {
     color: #FF6A00;
 }
 
-/* 작은 화면에서는 세로 정렬 */
+/* 작은 화면에서 비율 최적화 */
 @media (max-width: 768px) {
     .main-content {
         flex-direction: column;
-        gap: 20px; /* 위아래 간격 추가 */
+        gap: 15px; /* 간격 조정 */
+        align-items: center;
     }
 
     .left-section, .right-section {
-        width: 100%;
+        width: 90%; /* 양쪽 여백 확보 */
+    }
+
+    /* 제목 박스 크기 조절 */
+    .title-box {
+        height: 12vh; /* 뷰포트 높이의 12% */
+        max-height: 180px; /* 최대 높이 제한 */
+        min-height: 100px; /* 너무 작아지지 않도록 설정 */
+        padding: 15px; /* 패딩 줄이기 */
+        font-size: 1.5em; /* 폰트 크기 조정 */
+        margin-bottom: 5px; /* 간격 줄이기 */
     }
 
     /* 업로드 영역 크기 조절 */
     .upload-area {
-        max-width: 80%; /* 모바일에서 크기 줄이기 */
-        height: 200px; /* 높이도 줄이기 */
+        width: 90vw; /* 화면 너비의 90% */
+        max-width: 400px; /* 최대 크기 제한 */
+        height: 200px; /* 고정된 높이 */
+        max-height: 220px;
+    }
+
+    /* 버튼 정렬 개선 */
+    .button-container {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+    }
+
+    /* 버튼 크기 조정 */
+    .action-button {
+        width: 90%;
+        font-size: 0.9rem;
+        padding: 10px;
     }
 }
