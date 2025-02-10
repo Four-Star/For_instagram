@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, jsonify, send_file, Response
 from PIL import Image
 import io
 import os
-import zipfile
 import uuid
 
 app = Flask(__name__)
@@ -33,44 +32,40 @@ def upload():
     ratio = request.form.get('ratio', '1:1')
     margin = int(request.form.get('margin', 0))
 
-    zip_id = str(uuid.uuid4())  # 고유한 파일명 생성
-    zip_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{zip_id}.zip")
+    download_links = []  # 변환된 개별 파일의 다운로드 링크 리스트
 
-    with zipfile.ZipFile(zip_path, 'w') as zip_file:
-        for file in files:
-            try:
-                # 파일을 Pillow 이미지로 열기
-                image = Image.open(file.stream)
+    for file in files:
+        try:
+            # 파일을 Pillow 이미지로 열기
+            image = Image.open(file.stream)
 
-                # 이미지 비율 조정 (예제용, 변환 함수 직접 구현 필요)
-                image = image.convert('RGB')  # 기본 RGB 변환 적용
+            # 이미지 비율 조정 (예제용, 변환 함수 직접 구현 필요)
+            image = image.convert('RGB')  # 기본 RGB 변환 적용
 
-                # 이미지를 메모리에서 저장
-                img_io = io.BytesIO()
-                image.save(img_io, 'JPEG')
-                img_io.seek(0)
+            # 변환된 이미지를 개별 파일로 저장
+            file_id = str(uuid.uuid4())  # 고유한 파일명 생성
+            file_name = f"converted_{file_id}.jpg"
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
+            image.save(file_path, 'JPEG')
 
-                # 변환된 이미지를 압축 파일에 추가
-                file_name = f"converted_{file.filename}.jpg"
-                zip_file.writestr(file_name, img_io.read())
+            # 다운로드 링크 추가
+            download_links.append(f'/download/{file_name}')
 
-            except Exception as e:
-                return jsonify({'error': str(e)}), 500
+        except Exception as e:
+            return jsonify({'error': str(e)}), 500
 
-    # 변환된 파일 다운로드 URL 반환
-    return jsonify({'download_url': f'/download/{zip_id}'})
+    # 변환된 개별 이미지 다운로드 URL 반환
+    return jsonify({'download_urls': download_links})
 
-@app.route('/download/<zip_id>')
-def download(zip_id):
-    zip_path = os.path.join(app.config['UPLOAD_FOLDER'], f"{zip_id}.zip")
+@app.route('/download/<file_name>')
+def download(file_name):
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_name)
 
-    if not os.path.exists(zip_path):
+    if not os.path.exists(file_path):
         return jsonify({'error': 'File not found'}), 404
 
-    # 파일 다운로드를 위한 Content-Disposition 헤더 설정
-    response = Response(open(zip_path, 'rb').read(), mimetype='application/zip')
-    response.headers["Content-Disposition"] = f"attachment; filename=converted_images.zip"
-    return response
+    # 개별 파일 다운로드
+    return send_file(file_path, mimetype='image/jpeg', as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True)

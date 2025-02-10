@@ -52,12 +52,15 @@
                 <button class="action-button" onclick="convertImages()">이미지 변환</button>
             </div>
 
-            <!-- 다운로드 링크 -->
-            <a id="download-link" style="display: none;" download="converted_images.zip">변환된 이미지 다운로드</a>
+            <!-- 개별 다운로드 링크 리스트 -->
+            <div id="download-container" style="display: none;">
+                <h3>변환된 이미지 다운로드</h3>
+                <ul id="download-list"></ul>
+            </div>
 
             <!-- 카카오톡 인앱 브라우저에서 Chrome으로 열기 버튼 -->
             <p id="openBrowser" style="display:none;">
-                <a href="intent://photonton.pythonanywhere.com#Intent;scheme=https;package=com.android.chrome;end;">
+                <a id="openChrome" href="#" onclick="openInChrome(); return false;">
                     🔗 Chrome에서 열기
                 </a>
             </p>
@@ -96,11 +99,22 @@
 
         let result = await response.json();
 
-        if (result.download_url) {
-            let downloadLink = document.getElementById('download-link');
-            downloadLink.href = result.download_url;
-            downloadLink.style.display = "block";
-            downloadLink.innerText = "변환된 이미지 다운로드";
+        if (result.download_urls) {
+            let downloadContainer = document.getElementById('download-container');
+            let downloadList = document.getElementById('download-list');
+            downloadList.innerHTML = ""; // 기존 목록 초기화
+
+            result.download_urls.forEach(url => {
+                let li = document.createElement("li");
+                let a = document.createElement("a");
+                a.href = url;
+                a.innerText = "이미지 다운로드";
+                a.setAttribute("download", "converted_image.jpg");
+                li.appendChild(a);
+                downloadList.appendChild(li);
+            });
+
+            downloadContainer.style.display = "block"; // 다운로드 리스트 표시
 
             // 카카오톡 인앱 브라우저 감지 후 안내 메시지 표시
             if (navigator.userAgent.includes("KAKAOTALK")) {
@@ -108,6 +122,21 @@
             }
         } else {
             alert("변환 중 오류 발생: " + result.error);
+        }
+    }
+
+    // 카카오톡 인앱 브라우저에서 Chrome으로 열기
+    function openInChrome() {
+        const url = window.location.href;
+        const intentUrl = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+
+        // Android에서는 intent:// 사용하여 Chrome 실행
+        if (navigator.userAgent.includes("Android")) {
+            window.location.href = intentUrl;
+        }
+        // iOS에서는 알림 표시 (iOS는 intent:// 사용 불가)
+        else if (navigator.userAgent.includes("iPhone") || navigator.userAgent.includes("iPad")) {
+            alert("iOS에서는 Chrome으로 자동 이동이 불가능합니다.\n사파리에서 열어주세요.");
         }
     }
 
