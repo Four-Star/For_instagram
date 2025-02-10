@@ -56,7 +56,6 @@ def upload():
 
     zip_buffer.seek(0)
 
-    # 👇 **추가된 부분 (헤더 설정)**
     response = Response(zip_buffer.getvalue(), mimetype='application/zip')
     response.headers['Content-Disposition'] = 'attachment; filename=converted_images.zip'
     response.headers['Cache-Control'] = 'no-store'

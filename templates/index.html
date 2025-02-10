@@ -20,6 +20,35 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="static/style.css">
+
+    <script>
+        function isKakaoInAppBrowser() {
+            var ua = navigator.userAgent.toLowerCase();
+            return ua.includes("kakaotalk");
+        }
+
+        function redirectToChrome() {
+            var url = window.location.href;
+            var intentUrl = "intent://" + url.replace(/^https?:\/\//, "") +
+                "#Intent;scheme=https;package=com.android.chrome;end;";
+
+            // 크롬에서 열도록 유도
+            window.location.href = intentUrl;
+
+            // 카카오톡 브라우저 닫기 (백업)
+            setTimeout(function () {
+                window.location.href = "kakaotalk://browser/close/";
+            }, 500);
+        }
+
+        // 페이지 로드 시 자동 감지 및 리디렉트
+        window.onload = function () {
+            if (isKakaoInAppBrowser()) {
+                alert("이 페이지는 카카오톡 인앱 브라우저에서 지원되지 않습니다.\n크롬에서 다시 열어주세요!");
+                redirectToChrome();
+            }
+        };
+    </script>
 </head>
 
 <body>
@@ -65,6 +94,11 @@
             <div class="button-container">
                 <button class="action-button" onclick="document.getElementById('file-input').click();">파일 열기</button>
                 <button class="action-button" onclick="convertImages()">이미지 변환</button>
+            </div>
+
+            <!-- 크롬에서 열기 버튼 -->
+            <div class="button-container">
+                <button class="action-button" onclick="redirectToChrome()">크롬에서 열기</button>
             </div>
 
             <a id="download-link" style="display: none;" download="converted_images.zip">변환된 이미지 다운로드</a>
