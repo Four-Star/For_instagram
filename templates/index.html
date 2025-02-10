@@ -52,11 +52,70 @@
                 <button class="action-button" onclick="convertImages()">이미지 변환</button>
             </div>
 
+            <!-- 다운로드 링크 -->
             <a id="download-link" style="display: none;" download="converted_images.zip">변환된 이미지 다운로드</a>
+
+            <!-- 카카오톡 인앱 브라우저에서 Chrome으로 열기 버튼 -->
+            <p id="openBrowser" style="display:none;">
+                <a href="intent://yourwebsite.com#Intent;scheme=https;package=com.android.chrome;end;">
+                    🔗 Chrome에서 열기
+                </a>
+            </p>
         </div>
     </div>
 </div>
 
 <script src="static/script.js"></script>
+<script>
+    async function convertImages() {
+        let formData = new FormData();
+        let files = document.getElementById('file-input').files;
+        if (files.length === 0) {
+            alert("파일을 선택해주세요.");
+            return;
+        }
+
+        // 선택된 옵션 추가
+        let selectedMode = document.querySelector('.mode-button.active')?.getAttribute('data-mode') || 'light';
+        let selectedRatio = document.querySelector('.ratio-button.active')?.getAttribute('data-ratio') || '1:1';
+        let marginValue = document.getElementById('margin-input').value || '0';
+
+        formData.append('mode', selectedMode);
+        formData.append('ratio', selectedRatio);
+        formData.append('margin', marginValue);
+
+        // 파일 추가
+        for (let file of files) {
+            formData.append('file', file);
+        }
+
+        let response = await fetch('/upload/', {
+            method: 'POST',
+            body: formData
+        });
+
+        let result = await response.json();
+
+        if (result.download_url) {
+            let downloadLink = document.getElementById('download-link');
+            downloadLink.href = result.download_url;
+            downloadLink.style.display = "block";
+            downloadLink.innerText = "변환된 이미지 다운로드";
+
+            // 카카오톡 인앱 브라우저 감지 후 안내 메시지 표시
+            if (navigator.userAgent.includes("KAKAOTALK")) {
+                document.getElementById("openBrowser").style.display = "block";
+            }
+        } else {
+            alert("변환 중 오류 발생: " + result.error);
+        }
+    }
+
+    // 버튼 선택 효과
+    function selectButton(button, group) {
+        document.querySelectorAll(`.${group}`).forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+    }
+</script>
 </body>
 </html>
