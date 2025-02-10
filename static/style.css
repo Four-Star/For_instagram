@@ -164,7 +164,7 @@ body {
 }
 
 .mode-button:hover, .ratio-button:hover, .action-button:hover {
-    background-color: #0067A3;
+    filter: brightness(0.8);
 }
 
 /* 선택된 버튼 스타일 */
