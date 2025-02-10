@@ -297,6 +297,7 @@ body {
     .ratio-container,
     .margin-input-container {
         display: flex;
+        align-items: flex-start; /* 왼쪽 정렬 */
         justify-content: center;
         gap: 10px;
         margin-bottom: 15px; /* 간격 통일 */
@@ -312,23 +313,19 @@ body {
         margin-top: 10px;
     }
 
-    /* 버튼 컨테이너 왼쪽 정렬 */
+    /* 버튼 컨테이너 정렬 */
     .button-container {
         display: flex;
         flex-direction: column;
         align-items: flex-start; /* 왼쪽 정렬 */
-        justify-content: flex-start; /* 버튼을 위쪽에서부터 배치 */
-        gap: 10px;
+        gap: 10px; /* 버튼 간격 조정 */
         width: 100%;
     }
 
     /* 버튼 크기 조정 */
     .action-button {
-        width: auto; /* 내용에 맞게 조절 */
-        min-width: 120px; /* 최소 크기 설정 */
-        text-align: left; /* 텍스트도 왼쪽 정렬 */
+        width: 90%;
         font-size: 0.9rem;
         padding: 12px;
     }
-
 }
