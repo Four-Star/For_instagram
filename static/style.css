@@ -47,6 +47,7 @@ body {
     flex: 1;
     width: 55%;
     height: 100%;
+    /*height: auto;*/
     position: absolute;
     top: 0;
     left: 0;
@@ -271,15 +272,39 @@ body {
 
 /* 작은 화면에서 비율 최적화 */
 @media (max-width: 768px) {
+    /*.main-content {*/
+    /*    flex-direction: column;*/
+    /*    align-items: center;*/
+    /*    justify-content: flex-start;*/
+    /*    gap: 15px; !* 위아래 간격 통일 *!*/
+    /*    !*background-color: #333333;*!*/
+    /*}*/
+
+    /*.left-section, .right-section {*/
+    /*    width: 100%;*/
+    /*    height: fit-content;*/
+    /*    justify-content: flex-start; !* 위쪽 배치 *!*/
+    /*    position: relative;*/
+    /*    background-color: #666666;*/
+    /*}*/
     .main-content {
         flex-direction: column;
-        align-items: center;
-        gap: 15px; /* 위아래 간격 통일 */
+        align-items: stretch; /* 컨테이너 너비를 꽉 채우기 */
+        justify-content: flex-start;
+        gap: 15px; /* 섹션 간 불필요한 공백 제거 */
     }
 
     .left-section, .right-section {
         width: 100%;
+        min-height: 200px; /* 최소 높이 설정 */
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: center; /* 안의 요소를 중앙 정렬 */
         align-items: center;
+        padding: 15px;
+        background-color: #666666;
+        border-radius: 10px;
     }
 
     /* 제목 박스 크기 조절 */
@@ -316,7 +341,7 @@ body {
     .button-container {
         display: flex;
         flex-direction: column;
-        align-items: flex-start; /* 왼쪽 정렬 */
+        justify-content: flex-start; /* 위쪽 배치 */
         gap: 10px; /* 버튼 간격 조정 */
         width: 100%;
     }
