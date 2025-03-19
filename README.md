@@ -6,10 +6,8 @@ https://photonton.pythonanywhere.com/
 PILLOW를 활용하여 여백을 생성하는 방법으로 만들었다.
 
 1. desktop
-![KakaoTalk_20250320_003410711](https://github.com/user-attachments/assets/78140f55-d1df-4a9a-8979-e94ba198eb52)
-
-
 2. mobile(android)
+![KakaoTalk_20250320_003410711](https://github.com/user-attachments/assets/78140f55-d1df-4a9a-8979-e94ba198eb52)
 ![KakaoTalk_20250320_003627497](https://github.com/user-attachments/assets/2e6a6d14-3ca7-441d-899d-bc156a28553f)
 
 
